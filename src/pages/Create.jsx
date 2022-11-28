@@ -5,8 +5,9 @@ import { BASE_URL } from '../utils/settings';
 const Create = () => {
 
      // const[id,idchange]=useState("");
-   const[userName,setUserName]=useState("");
+   const[username,setUserName]=useState("");
    const[name,setName]=useState("");
+   const[password,setPassword]=useState("");
    const[phone,setPhone]=useState("");
    const[address,setAddress]=useState("");
    const[zipcode,setZipcode]=useState("");
@@ -16,11 +17,11 @@ const Create = () => {
   
   const handlesubmit=(e)=>{
     e.preventDefault();
-    const userdata ={userName,name,phone,address, zipcode};
+    const userdata ={username, name, password,phone,address, zipcode};
   
     
 
-    fetch(BASE_URL,{
+    fetch(BASE_URL + "/",{    
       method:"POST",
       headers:{"content-type":"application/json"},
       body:JSON.stringify(userdata)
@@ -29,7 +30,7 @@ const Create = () => {
       navigate('/');
     }).catch((err)=>{
       console.log(err.message)
-    })
+    }, [])
   }
   
 
@@ -67,6 +68,13 @@ const Create = () => {
               <div className="form-group">
                   <label>Name</label>
                   <input  onChange={e=>setName(e.target.value)} className="form-control"></input>
+              </div>
+          </div>
+
+          <div className="col-lg-12">
+              <div className="form-group">
+                  <label>Password</label>
+                  <input  onChange={e=>setPassword(e.target.value)} className="form-control"></input>
               </div>
           </div>
 
