@@ -13,7 +13,7 @@ export default function LoggedIn({user,setUser}) {
     return (            
     
         <div className="login-container">
-            {user.isLoggedIn && <span>Hi, {user["username"]}! {user["roles"].includes("admin") && //replaced
+            {user.isLoggedIn && <span>Hi, {user["username"]}! {user["role"] == "admin" && //replaced
             <span className="badge bg-dark">Admin</span>}</span>} 
             <button onClick={logout}>Logout</button>
             {/* But when you deploy then the button above - >
