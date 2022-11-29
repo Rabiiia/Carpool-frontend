@@ -4,6 +4,7 @@ import Home from "./pages/Home.jsx";
 import Search from "./pages/Search.jsx";
 import Contact from "./pages/Contact.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
+
 import CRUD from "./pages/CRUD";
 import Header from "./components/Header.jsx";
 import Jokes from "./components/Jokes.jsx";
@@ -77,6 +78,7 @@ function App(props) {
           <>
            {/* Add only Routes where you dont have to be logged ind to access */}
           <Route path="/" element={<LandingPage user={user} />} /> 
+         
           {/* But when you are going to deploy it then your path={DROPLET_FOLDER}, hopefully it works correctly */}
           
           </>
