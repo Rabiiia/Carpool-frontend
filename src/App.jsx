@@ -8,6 +8,7 @@ import Create from "./pages/Create.jsx";
 import CRUD from "./pages/CRUD";
 import Header from "./components/Header.jsx";
 import Jokes from "./components/Jokes.jsx";
+import User from "./components/User.jsx";
 import { useEffect } from "react";
 import {
   getToken,
@@ -19,7 +20,7 @@ import {
 
 export const initialState = {
   username: null,
-  roles: [],
+  role: null,
   isLoggedIn: false,
 };
 
@@ -27,7 +28,7 @@ export function updateUser(token, setUser) {
   const payload = decodeToken(token); //console.log(payload);
   setUser({
     username: payload["sub"],
-    roles: payload["roles"],
+    role: payload["role"],
     isLoggedIn: true,
   });
 }
@@ -89,7 +90,7 @@ function App(props) {
           <Route path="/" element={<Home user={user} />} />
 
           {/* You have to be logged in as  admin to see added routes down below  */}
-          {user.roles.includes("admin") && 
+          {user.role == "admin" && 
             <Route path="/crud" element={<CRUD />} />
             //  Add routes only admin can access 
           
@@ -98,7 +99,7 @@ function App(props) {
         )}
 
         {/* Does not matter if logged ind. You can always see these paths down below*/}
-        <Route path="/search" element={<Search />} />
+        <Route path="/user" element={<User />} />
          {/* But when you are going to deploy it then your path={DROPLET_FOLDER + /search} path above, hopefully it works correctly */}
         <Route path="/contact" element={<Contact address={obj} />} />
         <Route path="/jokes" element={<Jokes />} />
