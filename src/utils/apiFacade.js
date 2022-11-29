@@ -64,7 +64,7 @@ function apiFacade() {
         const jwtData = token.split(".")[1];
         const decodedJwtJsonData = window.atob(jwtData);
         const decodedJwtData = JSON.parse(decodedJwtJsonData);
-        decodedJwtData["role"] = decodedJwtData["role"].includes(",") ? decodedJwtData["role"].split(",").toArray() : [decodedJwtData["role"]]
+        decodedJwtData["role"] = decodedJwtData["role"].includes(",") ? decodedJwtData["role"].split(",") : [decodedJwtData["role"]]
         return decodedJwtData;
     }
 
