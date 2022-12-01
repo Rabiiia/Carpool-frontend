@@ -11,20 +11,19 @@ function Header({setErrorMsg, user, setUser}) {
 
     return (
         <nav className="topnav">
-            <NavLink className="active" to="/"><i className="fa fa-fw fa-home"></i> Home</NavLink>
-            <NavLink to="/user"><i className="fa fa-fw fa-search"></i> User</NavLink>
-        
-            {/* But when you deploy then navlinks above will be - > */}
-            {/* <NavLink className="active" to="{DROPLET_FOLDER}"><i className="fa fa-fw fa-home"></i> Home</NavLink>
-                <NavLink to={DROPLET_FOLDER + "/search"}><i className="fa fa-fw fa-search"></i> Search</NavLink> */}
-
-            <NavLink to="/jokes"><i className="fa fa-fw fa-envelope"></i> Jokes</NavLink>
-            {user.role == "admin" ? 
-                <NavLink to="/crud"><i className="fa fa-fw fa-envelope"/> CRUD </NavLink> : null}
-
-            {!getToken() ? //hvis man ikke er logget ind, så skal den i login komponent ellers ned i LoggedIn
+            <NavLink end to="/"><i className="fa fa-fw fa-home"></i> Home</NavLink>
+            {!getToken() ?
                 <Login setUser={setUser} setErrorMsg={setErrorMsg}/> :
-                <LoggedIn user={user} setUser={setUser}/>
+                <>
+                    <NavLink to="/user"><i className="fa fa-fw fa-user"></i> User</NavLink>
+                    <NavLink to="/find-ride"><i className="fa fa-fw fa-car"></i> Find ride</NavLink>
+                    <NavLink to="/arrange-ride"><i className="fa fa-fw fa-car"></i> Arrange ride</NavLink>
+                    <NavLink to="/my-ride"><i className="fa fa-fw fa-car"></i> My ride</NavLink>
+                    {user.role == "admin" &&
+                        <NavLink to="/crud"><i className="fa fa-fw fa-envelope"/> CRUD </NavLink>
+                    }
+                    <LoggedIn user={user} setUser={setUser}/>
+                </>
             }
         </nav>
 
