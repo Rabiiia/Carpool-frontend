@@ -1,29 +1,29 @@
-import {BASE_URL, VERIFY_URL, LOGIN_URL} from './settings';
+import {VERIFICATION_ENDPOINT, LOGIN_ENDPOINT} from "../settings.js";
 
-function handleHttpErrors(response) {
+export function handleHttpErrors(response) {
     if (!response.ok) {
         return Promise.reject(response.json());
     }
     return response;
-};
+}
 
 function apiFacade() {
 
     const setToken = (token) => {
-        localStorage.setItem('jwtToken', token)
+        localStorage.setItem('jwt', token)
     }
 
     const getToken = () => {
-        return localStorage.getItem('jwtToken')
+        return localStorage.getItem('jwt')
     }
 
     const removeToken = () => {
-        return localStorage.removeItem('jwtToken')
+        return localStorage.removeItem('jwt')
     }
 
     const verifyToken = async () => {
         const options = makeOptions("GET", true);
-        const response = await fetch(VERIFY_URL, options);
+        const response = await fetch(VERIFICATION_ENDPOINT, options);
         try {
             const token = (await (await handleHttpErrors(response)).json())["token"];
             setToken(token);
@@ -41,12 +41,12 @@ function apiFacade() {
     }
 
     const logOut = () => {
-        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("jwt");
     }
 
     const logIn = async (user, password) => {
         const options = makeOptions("POST", false, {username: user, password: password});
-        const response = await fetch(LOGIN_URL, options);
+        const response = await fetch(LOGIN_ENDPOINT, options);
         try {
             const token = (await (await handleHttpErrors(response)).json())["token"];
             setToken(token);
@@ -128,8 +128,8 @@ export function logIn(user, password) {
 export function removeToken() {
     return apiFacade().removeToken()
 }
-export function makeOptions() {
-    return apiFacade().makeOptions()
+export function makeOptions(method, addToken, body) {
+    return apiFacade().makeOptions(method, addToken, body)
 }
 export function fetchDat() {
     return apiFacade().fetchData()
