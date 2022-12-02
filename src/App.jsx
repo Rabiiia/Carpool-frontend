@@ -3,10 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Search from "./pages/Search.jsx";
 import Contact from "./pages/Contact.jsx";
-import LandingPage from "./pages/LandingPage.jsx";
+import Landing from "./pages/Landing.jsx";
 import CRUD from "./pages/CRUD";
+import ArrangeRide from "./pages/ArrangeRide.jsx";
+import MyRide from "./pages/MyRide.jsx";
 import Header from "./components/Header.jsx";
-import Jokes from "./components/Jokes.jsx";
 import User from "./components/User.jsx";
 import { useEffect } from "react";
 import {
@@ -16,17 +17,19 @@ import {
   removeToken,
   setToken,
 } from "./utils/apiFacade";
+import FindRide from "./pages/FindRide";
 
 export const initialState = {
-  username: null,
-  role: null,
+  //username: null,
+  //role: null,
   isLoggedIn: false,
 };
 
 export function updateUser(token, setUser) {
   const payload = decodeToken(token); //console.log(payload);
   setUser({
-    username: payload["sub"],
+    id: payload["id"],
+    username: payload["username"],
     role: payload["role"],
     isLoggedIn: true,
   });
@@ -61,6 +64,8 @@ function App(props) {
     }
   }, []);
 
+  const now = new Date();
+
   const obj = {
     name: "TestName",
     street: "TestStreet",
@@ -72,37 +77,31 @@ function App(props) {
     <>
       <Header user={user} setUser={setUser} />
       <Routes>
-       
-        {!getToken() ? (
-          <>
-           {/* Add only Routes where you dont have to be logged ind to access */}
-          <Route path="/" element={<LandingPage user={user} />} /> 
-          {/* But when you are going to deploy it then your path={DROPLET_FOLDER}, hopefully it works correctly */}
-          
-          </>
-        ) : 
-        
-        ( 
-        <>
-           {/* You have to be logged in as user or admin to see added routes down below  */}
-          <Route path="/" element={<Home user={user} />} />
-
-          {/* You have to be logged in as  admin to see added routes down below  */}
-          {user.role == "admin" && 
-            <Route path="/crud" element={<CRUD />} />
-            //  Add routes only admin can access 
-          
-          }
-        </>
-        )}
-
-        {/* Does not matter if logged ind. You can always see these paths down below*/}
+        {/* Pages you can always see */}
         <Route path="/user" element={<User />} />
-         {/* But when you are going to deploy it then your path={DROPLET_FOLDER + /search} path above, hopefully it works correctly */}
-        <Route path="/contact" element={<Contact address={obj} />} />
-        <Route path="/jokes" element={<Jokes />} />
-        
+        <Route path="/find-ride" element={<FindRide />} />
+
         <Route path="*" element={<h1>Page Not Found !!!!</h1>} />
+       
+        {!getToken() ?
+          <>
+            {/* Pages you can only see when you're logged OUT */}
+            <Route path="/" element={<Landing user={user} />} />
+
+          </> :
+          <>
+            {/* Pages you can only see when you're logged IN */}
+            <Route path="/" element={<Home user={user} />} />
+            <Route path="/arrange-ride" element={<ArrangeRide user={user} />} />
+            <Route path="/my-ride" element={<MyRide />} />
+            <Route path="/contact" element={<Contact address={obj} />} />
+
+            {/* Pages you can only see when you're ADMIN */}
+            {user.role == "admin" &&
+              <Route path="/crud" element={<CRUD />} />
+            }
+          </>
+        }
       </Routes>
     </>
   );
