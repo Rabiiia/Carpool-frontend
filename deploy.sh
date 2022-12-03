@@ -15,6 +15,6 @@ echo "##############################"
 
 # first xxxxxx with your droplet url
 # second xxxxx with your frontend folder
-scp -r ./dist/* root@xxxxx:/var/www/xxxxx
+scp -r ./dist/* root@acmverden.dk:/var/www/CA3
 
-# write ./deploy in terminal everytime you want to deploy frontend changes on your nginx server 
+# write ./deploy.sk in terminal everytime you want to deploy frontend changes on your nginx server 

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { initialState } from "../App.jsx";
+import { FRONTEND_URL } from "../settings.js";
 import facade from "../utils/apiFacade.js";
+import { Link } from "react-router-dom";
 
 export default function LoggedIn({user,setUser}) {
 
@@ -15,9 +17,9 @@ export default function LoggedIn({user,setUser}) {
         <div className="login-container">
             {user.isLoggedIn && <span>Hi, {user["username"]}! {user["role"] == "admin" && //replaced
             <span className="badge bg-dark">Admin</span>}</span>} 
-            <button onClick={logout}>Logout</button>
-            {/* But when you deploy then the button above - >
-            <Link to={DROPLET_FOLDER} onClick={logout}>Logout</Link>. You can make it into a button inside Link i guess but dont know how */}
+            {/* <button onClick={logout}>Logout</button> */}
+            <Link to={FRONTEND_URL} onClick={logout}>Logout</Link>
+           
         </div>
     )
 
