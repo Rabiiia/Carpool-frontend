@@ -1,5 +1,5 @@
 // Frontend
-export const FRONTEND_URL = "/CA3" // "/CA3";
+export const FRONTEND_URL = "/CA3"; // "/";
 
 // Backend
 export const BACKEND_URL = "https://acmverden.dk/tomcat/CA3"; // "http://localhost:8080";
