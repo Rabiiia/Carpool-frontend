@@ -1,4 +1,5 @@
 import React, { Component, useRef, useState, useEffect} from 'react'
+import {BACKEND_URL} from '../settings.js';
 
 const User = (props) => {
     
@@ -10,7 +11,7 @@ const User = (props) => {
 
 
     const fetchUser = async (id) => {
-      return fetch("http://localhost:8080/api/info/"+id)
+      return fetch(BACKEND_URL + "/api/users/"+ id)
         .then(response => {
           
           return response.json()
