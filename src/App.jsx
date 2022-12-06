@@ -18,6 +18,8 @@ import {
   setToken,
 } from "./utils/apiFacade";
 import FindRide from "./pages/FindRide";
+import { FRONTEND_URL } from "./settings.js";
+
 
 export const initialState = {
   //username: null,
@@ -78,7 +80,7 @@ function App(props) {
       <Header user={user} setUser={setUser} />
       <Routes>
         {/* Pages you can always see */}
-        <Route path="/user" element={<User />} />
+        <Route path={FRONTEND_URL + "/user"} element={<User />} />
         <Route path="/find-ride" element={<FindRide />} />
 
         <Route path="*" element={<h1>Page Not Found !!!!</h1>} />
@@ -86,12 +88,12 @@ function App(props) {
         {!getToken() ?
           <>
             {/* Pages you can only see when you're logged OUT */}
-            <Route path="/" element={<Landing user={user} />} />
+            <Route path={FRONTEND_URL} element={<Landing user={user} />} />
 
           </> :
           <>
             {/* Pages you can only see when you're logged IN */}
-            <Route path="/" element={<Home user={user} />} />
+            <Route path={FRONTEND_URL} element={<Home user={user} />} />
             <Route path="/arrange-ride" element={<ArrangeRide user={user} />} />
             <Route path="/my-ride" element={<MyRide />} />
             <Route path="/contact" element={<Contact address={obj} />} />

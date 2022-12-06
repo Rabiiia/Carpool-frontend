@@ -44,12 +44,12 @@ const User = (props) => {
             </form>
             {user!=null &&
               <div>
-                <h3>{user.username}</h3>
-                <h3>{user.name}</h3>
-                <h3>{user.phone}</h3>
-                <h3>{user.address}</h3>
-                <h3>{user.zipcode}</h3>
-                <h3>{user.role}</h3>
+                <h3>Username: {user.username}</h3>
+                <h3>Name: {user.name}</h3>
+                <h3>Phone: {user.phone}</h3>
+                <h3>Address: {user.address}</h3>
+                <h3>Zipcode: {user.zipcode}</h3>
+                <h3>Role: {user.role}</h3>
             </div>
             }
         </div>
