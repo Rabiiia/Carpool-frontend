@@ -23,7 +23,10 @@ const User = (props) => {
     }
 
     return (
-        <div>
+    
+    <div className="row">
+    <div className="offset-lg-3 col-lg-6">
+        <br></br>
             <form onSubmit={(event) => {event.preventDefault()}}>
                 <input
                     ref={inputRef}
@@ -39,9 +42,10 @@ const User = (props) => {
                         console.log(await fetchUser(inputRef.current.value));
                         
                     }}
-                
-                >Submit</button>
+                >Submit</button>  
             </form>
+            
+
             {user!=null &&
               <div>
                 <h3>Username: {user.username}</h3>
@@ -50,10 +54,13 @@ const User = (props) => {
                 <h3>Address: {user.address}</h3>
                 <h3>Zipcode: {user.zipcode}</h3>
                 <h3>Role: {user.role}</h3>
+                <h3>school Id: {user.schoolId}</h3>
             </div>
             }
         </div>
+        </div>
     );
+    
 
     
 }

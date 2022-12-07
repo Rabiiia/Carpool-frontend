@@ -16,12 +16,14 @@ function Header({setErrorMsg, user, setUser}) {
             {!getToken() ?
                 <Login setUser={setUser} setErrorMsg={setErrorMsg}/> :
                 <>
-                    <NavLink to={FRONTEND_URL + "/user"}><i className="fa fa-fw fa-user"></i> User</NavLink>
+                    <NavLink to= "/user"><i className="fa fa-fw fa-user"></i> User</NavLink>
                     <NavLink to="/find-ride"><i className="fa fa-fw fa-car"></i> Find ride</NavLink>
                     <NavLink to="/arrange-ride"><i className="fa fa-fw fa-car"></i> Arrange ride</NavLink>
                     <NavLink to="/my-ride"><i className="fa fa-fw fa-car"></i> My ride</NavLink>
+                    
                     {user.role == "admin" &&
-                        <NavLink to="/crud"><i className="fa fa-fw fa-envelope"/> CRUD </NavLink>
+                        <NavLink to="/crud"><i className="fa fa-fw fa-building"></i> Create School</NavLink>
+                        // <NavLink to="/list"><i className="fa fa-fw fa-building"></i>List School</NavLink>
                     }
                     <LoggedIn user={user} setUser={setUser}/>
                 </>

@@ -5,6 +5,7 @@ import Search from "./pages/Search.jsx";
 import Contact from "./pages/Contact.jsx";
 import Landing from "./pages/Landing.jsx";
 import CRUD from "./pages/CRUD";
+import LIST from "./pages/LIST";
 import ArrangeRide from "./pages/ArrangeRide.jsx";
 import MyRide from "./pages/MyRide.jsx";
 import Header from "./components/Header.jsx";
@@ -80,7 +81,7 @@ function App(props) {
       <Header user={user} setUser={setUser} />
       <Routes>
         {/* Pages you can always see */}
-        <Route path={FRONTEND_URL + "/user"} element={<User />} />
+        <Route path= "/user" element={<User />} />
         <Route path="/find-ride" element={<FindRide />} />
 
         <Route path="*" element={<h1>Page Not Found !!!!</h1>} />
@@ -101,6 +102,7 @@ function App(props) {
             {/* Pages you can only see when you're ADMIN */}
             {user.role == "admin" &&
               <Route path="/crud" element={<CRUD />} />
+              // <Route path="/list" element={<LIST />} />
             }
           </>
         }
