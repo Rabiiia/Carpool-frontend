@@ -20,32 +20,32 @@ import {
 import FindRide from "./pages/FindRide";
 
 export const initialState = {
-  //username: null,
-  //role: null,
-  isLoggedIn: false,
+  user: {
+    isLoggedIn: false,
+  },
 };
 
-export function updateUser(token, setUser) {
+export function mapToken(token, setSession) {
   const payload = decodeToken(token); //console.log(payload);
-  setUser({
-    id: payload["id"],
-    username: payload["username"],
-    role: payload["role"],
-    isLoggedIn: true,
+  setSession({
+    user: {
+      id: payload["id"],
+      username: payload["username"],
+      role: payload["role"],
+      isLoggedIn: true,
+    },
+    expires: payload["exp"],
   });
 }
 
 function App(props) {
-  const [user, setUser] = useState(initialState);
+  const [session, setSession] = useState(initialState);
 
-  //denne function reruns everytime page is refreshed
-  // bemærk denne function er async, fordi verifyToken function return a promise.
-  // and async await unpacks that promise
   async function checkToken(token) {
     console.log("Checking token");
     if ((token = await verifyToken(token))) {
       setToken(token);
-      updateUser(token, setUser);
+      mapToken(token, setSession);
     } else {
       console.log("Session expired");
       alert("Your session has expired. Please log in again.");
@@ -57,10 +57,10 @@ function App(props) {
     if (getToken()) {
       (async () => {
         await checkToken(getToken());
-      })(); //< async anonymous function is being called right away ()
+      })();
       setTimeout(async () => {
         await checkToken(getToken());
-      }, 1000 * 60 * 30);
+      }, session.expires * 1000);
     }
   }, []);
 
@@ -75,7 +75,7 @@ function App(props) {
 
   return (
     <>
-      <Header user={user} setUser={setUser} />
+      <Header session={session} setSession={setSession} />
       <Routes>
         {/* Pages you can always see */}
         <Route path="/user" element={<User />} />
@@ -86,18 +86,18 @@ function App(props) {
         {!getToken() ?
           <>
             {/* Pages you can only see when you're logged OUT */}
-            <Route path="/" element={<Landing user={user} />} />
+            <Route path="/" element={<Landing />} />
 
           </> :
           <>
             {/* Pages you can only see when you're logged IN */}
-            <Route path="/" element={<Home user={user} />} />
-            <Route path="/arrange-ride" element={<ArrangeRide user={user} />} />
+            <Route path="/" element={<Home session={session} />} />
+            <Route path="/arrange-ride" element={<ArrangeRide user={session.user} />} />
             <Route path="/my-ride" element={<MyRide />} />
             <Route path="/contact" element={<Contact address={obj} />} />
 
             {/* Pages you can only see when you're ADMIN */}
-            {user.role == "admin" &&
+            {session.user.role == "admin" &&
               <Route path="/crud" element={<CRUD />} />
             }
           </>

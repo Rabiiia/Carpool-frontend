@@ -1,15 +1,15 @@
 import React, {useRef, useState} from 'react';
-import { updateUser } from '../App.jsx';
+import { mapToken } from '../App.jsx';
 import facade  from "../utils/apiFacade.js";
 
-function Login({setUser, setErrorMsg}) { 
+function Login({setSession, setErrorMsg}) { 
     const init = {username: "", password: ""};
     const [loginCredentials, setLoginCredentials] = useState(init);
 
     const performLogin = async (evt) => {
         evt.preventDefault();
         const token = (await facade.logIn(loginCredentials.username, loginCredentials.password));
-        updateUser(token, setUser);
+        mapToken(token, setSession);
     }
 
     const onChange = (evt) => {
