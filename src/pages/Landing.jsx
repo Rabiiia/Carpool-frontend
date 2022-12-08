@@ -4,12 +4,13 @@ import {REGISTRATION_ENDPOINT, CREATE_SCHOOL, LIST_SCHOOL} from '../settings.js'
 
 export default function Landing() {
   // const[id,idchange]=useState("");
-  // const [username, setUserName] = useState("");
-  // const [name, setName] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [zipcode, setZipcode] = useState("");
+  const [username, setUserName] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [schoolId, setSchoolId] = useState("");
 
   const [schoolName, setSchoolName] = useState("");
   const [location, setLocation] = useState("");
@@ -51,7 +52,7 @@ export default function Landing() {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    const userdata = {username, name, password, phone, address, zipcode};
+    const userdata = {username, name, password, phone, address, zipcode, schoolId};
 
 
     fetch(REGISTRATION_ENDPOINT, {
@@ -128,6 +129,15 @@ export default function Landing() {
                 <input onChange={e => setZipcode(e.target.value)} className="form-control"></input>
               </div>
             </div>
+
+            <div className="col-lg-12">
+              <div className="form-group">
+                <label>School id</label>
+                <input onChange={e => setSchoolId(e.target.value)} className="form-control"></input>
+              </div>
+            </div>
+
+  
 
 
             <div className="col-lg-12">
