@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=/CA3",
     "preview": "vite preview"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.17.1",
     "bootstrap": "^5.2.2",
+    "bootstrap-icons": "^1.10.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2"

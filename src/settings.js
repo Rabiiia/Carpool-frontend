@@ -1,14 +1,15 @@
 // Frontend
-export const FRONTEND_URL = "http://localhost:8080"; // "http://acmverden.dk/CA3";
+export const FRONTEND_URL = "" // "/CA3"; 
 
 // Backend
-export const BACKEND_URL = "http://localhost:8080"; // "http://acmverden.dk/tomcat/CA3";
+export const BACKEND_URL = "http://localhost:8080" //"https://acmverden.dk/tomcat/CA3"; 
 
 // Endpoints
 export const LOGIN_ENDPOINT = BACKEND_URL + "/api/login";
 export const VERIFICATION_ENDPOINT = BACKEND_URL + "/api/verify";
 export const REGISTRATION_ENDPOINT = BACKEND_URL + "/api/users";
 export const GET_USER_ENDPOINT = {method: "GET", url: BACKEND_URL + "/api/users"};
+export const SCHOOL_ENDPOINT = BACKEND_URL + "/api/schools";
 export const CREATE_RIDE_ENDPOINT = {method: "POST", url: BACKEND_URL +"/api/rides/"};
 export const GET_RIDE_ENDPOINT = {method: "GET", url: BACKEND_URL +"/api/rides/"};
 export const UPDATE_RIDE_ENDPOINT = {method: "PATCH", url: BACKEND_URL +"/api/rides/"};
