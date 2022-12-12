@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import { mapToken } from '../App.jsx';
+import { jsonToSession } from '../App.jsx';
 import facade  from "../utils/apiFacade.js";
 
 function Login({setSession, setErrorMsg}) { 
@@ -8,8 +8,8 @@ function Login({setSession, setErrorMsg}) {
 
     const performLogin = async (evt) => {
         evt.preventDefault();
-        const token = (await facade.logIn(loginCredentials.username, loginCredentials.password));
-        mapToken(token, setSession);
+        const json = (await facade.logIn(loginCredentials.username, loginCredentials.password));
+        jsonToSession(json, setSession);
     }
 
     const onChange = (evt) => {
