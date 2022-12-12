@@ -25,10 +25,11 @@ function apiFacade() {
         const options = makeOptions("GET", true);
         const response = await fetch(VERIFICATION_ENDPOINT, options);
         try {
-            const token = (await (await handleHttpErrors(response)).json())["token"];
+            const json = await (await handleHttpErrors(response)).json();
+            const token = json["token"];
             setToken(token);
-            console.log(token);
-            return token;
+            console.log(json);
+            return json;
         } catch (error) {
             removeToken();
             console.log((await error).message);
@@ -48,17 +49,18 @@ function apiFacade() {
         const options = makeOptions("POST", false, {username: user, password: password});
         const response = await fetch(LOGIN_ENDPOINT, options);
         try {
-            const token = (await (await handleHttpErrors(response)).json())["token"];
+            const json = await (await handleHttpErrors(response)).json();
+            const token = json["token"];
+            const user = json["user"];
             setToken(token);
-            console.log(token);
-            return token;
+            console.log(json);
+            return json;
         } catch (error) {
             console.log((await error).message);
             return false;
         }
     };
 
-    // added this function because we want read user(altså bruger) and its roles from token above in login function
     const decodeToken = (token) => {
         if (!token) return undefined;
         const jwtData = token.split(".")[1];

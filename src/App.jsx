@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { json, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Search from "./pages/Search.jsx";
 import Contact from "./pages/Contact.jsx";
@@ -25,13 +25,18 @@ export const initialState = {
   },
 };
 
-export function mapToken(token, setSession) {
-  const payload = decodeToken(token); //console.log(payload);
+export function jsonToSession(json, setSession) {
+  const payload = decodeToken(json.token); //console.log(payload);
+  const user = json.user;
   setSession({
     user: {
-      id: payload["id"],
-      username: payload["username"],
-      role: payload["role"],
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      phone: user.phone,
+      address: user.address,
+      school: user.school,
+      role: user.role,
       isLoggedIn: true,
     },
     expires: payload["exp"],
@@ -43,9 +48,10 @@ function App(props) {
 
   async function checkToken(token) {
     console.log("Checking token");
-    if ((token = await verifyToken(token))) {
-      setToken(token);
-      mapToken(token, setSession);
+    let json;
+    if ((json = await verifyToken(token))) {
+      setToken(json.token);
+      jsonToSession(json, setSession);
     } else {
       console.log("Session expired");
       alert("Your session has expired. Please log in again.");
