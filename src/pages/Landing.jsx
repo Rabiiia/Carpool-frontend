@@ -114,9 +114,7 @@ export default function Landing() {
                     <div className="form-group">
                       <label>School ID</label>
                       <input onChange={e => setZipcode(e.target.value)} className="form-control" id="create-school"></input>
-                    </div>
                   </div>
-
 
                   <div className="col-lg-12">
                     <div className="form-group">
