@@ -17,7 +17,7 @@ function Header({setErrorMsg, session, setSession}) {
           <NavLink to= "/user"><i className="fa fa-fw fa-user"></i> User</NavLink>
           <NavLink to="/find-ride"><i className="fa fa-fw fa-car"></i> Find ride</NavLink>
           <NavLink to="/arrange-ride"><i className="fa fa-fw fa-car"></i> Arrange ride</NavLink>
-          <NavLink to="/my-ride"><i className="fa fa-fw fa-car"></i> My ride</NavLink>
+          <NavLink to="/ride/1"><i className="fa fa-fw fa-car"></i> My ride</NavLink>
           {session.user.role == "admin" &&
             <NavLink to="/crud"><i className="fa fa-fw fa-building"></i> Create School</NavLink>
             // <NavLink to="/list"><i className="fa fa-fw fa-building"></i>List School</NavLink>

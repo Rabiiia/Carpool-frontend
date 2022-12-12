@@ -7,9 +7,13 @@ export const BACKEND_URL = "http://localhost:8080" //"https://acmverden.dk/tomca
 // Endpoints
 export const LOGIN_ENDPOINT = BACKEND_URL + "/api/login";
 export const VERIFICATION_ENDPOINT = BACKEND_URL + "/api/verify";
+
+export const SCHOOL_ENDPOINT = BACKEND_URL + "/api/schools";
+export const USER_ENDPOINT = BACKEND_URL + "/api/users";
+export const RIDE_ENDPOINT = BACKEND_URL + "/api/rides";
+
 export const REGISTRATION_ENDPOINT = BACKEND_URL + "/api/users";
 export const GET_USER_ENDPOINT = {method: "GET", url: BACKEND_URL + "/api/users"};
-export const SCHOOL_ENDPOINT = BACKEND_URL + "/api/schools";
 export const CREATE_RIDE_ENDPOINT = {method: "POST", url: BACKEND_URL +"/api/rides/"};
 export const GET_RIDE_ENDPOINT = {method: "GET", url: BACKEND_URL +"/api/rides/"};
 export const UPDATE_RIDE_ENDPOINT = {method: "PATCH", url: BACKEND_URL +"/api/rides/"};

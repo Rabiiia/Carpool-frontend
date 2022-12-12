@@ -1,6 +1,6 @@
 import React, {useState, useEffect}from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import {REGISTRATION_ENDPOINT, SCHOOL_ENDPOINT} from '../settings.js';
+import {USER_ENDPOINT, SCHOOL_ENDPOINT} from '../settings.js';
 
 export default function Landing() {
   // const[id,idchange]=useState("");
@@ -33,7 +33,7 @@ export default function Landing() {
 
 
 
-    const handlesubmit2 = (e) => {
+  const handlesubmit2 = (e) => {
     e.preventDefault();
     const schooldata = {schoolName, location};
 
@@ -53,8 +53,8 @@ export default function Landing() {
   const [fields, setFields] = useState({});
 
   useEffect(() => {
-    document.querySelectorAll("#userForm input").forEach((input) => { console.log("Input: ", input);
-      document.getElementById(input.id).onchange = (event) => { console.log("hi");
+    document.querySelectorAll("#userForm input").forEach((input) => { //console.log("Input: ", input);
+      document.getElementById(input.id).onchange = (event) => { //console.log("hi");
         const field = event.target; //console.log(field.id + ": " + field.value);
         const fieldName = field.id.substring("create-user-".length); //console.log(fieldName);
         setFields(prevFields => ({...prevFields, [fieldName]: field.value}));
@@ -68,12 +68,13 @@ export default function Landing() {
     const userdata = {username, name, password, phone, address, zipcode, schoolId};
 
 
-    fetch(REGISTRATION_ENDPOINT, {
+    console.log("Fields: ", fields);
+    fetch(USER_ENDPOINT, {
       method: "POST",
       headers: {"content-type": "application/json"},
       body: JSON.stringify(fields)
     }).then((res) => {
-      alert('Saved successfully.');
+      //alert('Saved successfully.');
     }).catch((err) => {
       console.log(err.message)
     }, [])
@@ -134,7 +135,7 @@ export default function Landing() {
                   <div className="col-lg-12">
                     <div className="form-group">
                       <div className="input-group">
-                        <input type="text" className="form-control" id="create-user-street"></input>
+                        <input type="text" className="form-control" id="create-user-address"></input>
                         <input type="number" className="form-control" id="create-user-zipcode"></input>
                       </div>
                     </div>

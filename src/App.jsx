@@ -27,7 +27,7 @@ export const initialState = {
 
 export function jsonToSession(json, setSession) {
   const payload = decodeToken(json.token); //console.log(payload);
-  const user = json.user;
+  const user = json.user; console.log(user);
   setSession({
     user: {
       id: user.id,
@@ -99,7 +99,7 @@ function App(props) {
             {/* Pages you can only see when you're logged IN */}
             <Route path={FRONTEND_URL + "/"} element={<Home session={session} />} />
             <Route path={FRONTEND_URL + "/arrange-ride"} element={<ArrangeRide user={session.user} />} />
-            <Route path={FRONTEND_URL + "/my-ride"} element={<MyRide />} />
+            <Route path={FRONTEND_URL + "/ride/:id"} element={<MyRide />} />
             <Route path={FRONTEND_URL + "/contact"} element={<Contact address={obj} />} />
 
             {/* Pages you can only see when you're ADMIN */}
