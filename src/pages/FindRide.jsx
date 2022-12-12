@@ -5,10 +5,8 @@ import {getAllRides} from "../utils/rideFacade.js";
 export default function FindRide() {
 
     const [ride, setRide] = useState({})
-
-    const inputRef = useRef();
-
     
+    const inputRef = useRef();
 
 
     const fetchRideByDestination = async (destination) => {
@@ -24,9 +22,8 @@ export default function FindRide() {
     }
 
     return (
-    
     <div className="row">
-    <div className="offset-lg-3 col-lg-6">
+    <div className="col-lg-6">
         <br></br>
             <form onSubmit={(event) => {event.preventDefault()}}>
                 <input
@@ -46,57 +43,76 @@ export default function FindRide() {
                 >Submit</button>  
             </form>
             
-
-            {ride!=null &&
-              <div>
-                {/* <h3>{ride.id}</h3> */}
-                <h3>{ride.origin}</h3>
-                <h3>{ride.destination}</h3>
-                <h3>{ride.arrival}</h3>
-                <h3>{ride.seats}</h3>
-                {/* <h3>{ride.driver.id}</h3>
-                <h3>{ride.driver.username}</h3>
-                <h3>{ride.driver.address}</h3>
-                <h3>{ride.driver.phone}</h3>
-                <h3>{ride.driver.zipcode}</h3>
-                <h3>{ride.driver.name}</h3>
-                <h3>{ride.driver.role}</h3>
-                <h3>{ride.driver.schoolId}</h3>
-                <h3>{ride.passengers}</h3> */}
+            <table className="table table-default">
+            <thead className="bg-dark text-white">
+              <tr>
+                <td>Origin</td>
+                <td>Destination</td>
+                <td>Arrival</td>
+                <td>seats</td>
+                <td>username</td>
+                <td>address</td>
+                <td>phone</td>
+                <td>zipcode</td>
+                <td>name</td>
+                <td>role</td>
+                <td>schoolId</td>
+                <td>passengers</td>
+              </tr>
+            </thead>
+            <tbody>
+            {ride.length > 0 && (
+                ride.map((ride, index) => (
+                <tr key={index}>  
+                <td>{ride.origin}</td>
+                <td>{ride.destination}</td>
+                <td>{ride.arrival}</td>
+                <td>{ride.seats}</td>
+                <td>{ride.driver.username}</td>
+                <td>{ride.driver.address}</td>
+                <td>{ride.driver.phone}</td>
+                <td>{ride.driver.zipcode}</td>
+                <td>{ride.driver.name}</td>
+                <td>{ride.driver.role}</td>
+                <td>{ride.driver.schoolId}</td>
+                <td>{ride.passengers}</td>
+                </tr>
+                )
+                ))}
+                </tbody>
+          </table>
             </div>
-            }
-        </div>
         </div>
     );
-    
+         
 
+//  LIST OF RIDES
 
+    const [rides, setRides] = useState([]);
 
-    // const [rides, setRides] = useState([]);
+    useEffect(() => {
+        (async () => {
+            const rides = await getAllRides();
+            setRides(prevRides => ({...prevRides, rides}))
+        })()
+    }, []);
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const rides = await getAllRides();
-    //         setRides(prevRides => ({...prevRides, rides}))
-    //     })()
-    // }, []);
+    useEffect(() => {
+        console.log(rides);
+    }, [rides]);
 
-    // useEffect(() => {
-    //     console.log(rides);
-    // }, [rides]);
-
-    // return (
-    //     <ul>
-    //         {rides.length > 0 && rides.map((ride, index) =>
-    //             <li key={index}>
-    //                 {ride.id}<br/>
-    //                 {ride.origin}<br/>
-    //                 {ride.destination}<br/>
-    //                 {ride.arrival}<br/>
-    //                 {ride.driver}<br/>
-    //                 {ride.passengers}<br/>
-    //             </li>
-    //         )}
-    //     </ul>
-    // );
+    return (
+        <ul>
+            {rides.length > 0 && rides.map((ride, index) =>
+                <li key={index}>
+                    {ride.id}<br/>
+                    {ride.origin}<br/>
+                    {ride.destination}<br/>
+                    {ride.arrival}<br/>
+                    {ride.driver}<br/>
+                    {ride.passengers}<br/>
+                </li>
+            )}
+        </ul>
+    );
 }
