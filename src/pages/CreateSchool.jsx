@@ -14,7 +14,7 @@ export default function CreateSchool() {
     });
   }, []);
 
-  const handlesubmit2 = (e) => {
+  const handlesubmit = (e) => {
     e.preventDefault();
     console.log(fields);
 
@@ -33,7 +33,7 @@ export default function CreateSchool() {
     <main className="container">
       <section className="row">
         <div className="col-8">
-          <form className="container" onSubmit={handlesubmit2} id="create-school-form">
+          <form className="container" onSubmit={handlesubmit} id="create-school-form">
             <div className="card" style={{"textAlign": "left"}}>
               <div className="card-title">
                 <h2>Create School</h2>
