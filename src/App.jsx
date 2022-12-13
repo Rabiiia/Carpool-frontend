@@ -16,7 +16,8 @@ import User from "./components/User.jsx";
 import FindRide from "./pages/FindRide";
 import ArrangeRide from "./pages/ArrangeRide.jsx";
 import MyRide from "./pages/MyRide.jsx";
-import CRUD from "./pages/CRUD";
+import CreateSchool from "./pages/CreateSchool.jsx";
+import Schools from "./pages/Schools.jsx";
 import Contact from "./pages/Contact.jsx";
 
 export const initialState = {
@@ -34,7 +35,7 @@ export function jsonToSession(json, setSession) {
       name: user.name,
       username: user.username,
       phone: user.phone,
-      address: user.address,
+      location: user.address,
       school: user.school,
       role: user.role,
       isLoggedIn: true,
@@ -104,8 +105,10 @@ function App(props) {
 
             {/* Pages you can only see when you're ADMIN */}
             {session.user.role == "admin" &&
-              <Route path={FRONTEND_URL + "/crud"} element={<CRUD />} />
-              // <Route path="/list" element={<LIST />} />
+              <>
+                <Route path={FRONTEND_URL + "/crud"} element={<CreateSchool />} />
+                <Route path="/schools" element={<Schools />} />
+              </>
             }
           </>
         }

@@ -10,7 +10,7 @@ export default function ArrangeRide({user}) {
 
   useEffect(() => {
     if (user.isLoggedIn) {
-      setHome(user.address.address + ", " + user.address.zipcode);
+      setHome(user.location.address + ", " + user.location.zipcode);
       setSchool(user.school.address.address + ", " + user.school.address.zipcode);
     }
   }, [user]);
