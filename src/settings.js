@@ -20,4 +20,4 @@ export const UPDATE_RIDE_ENDPOINT = {method: "PATCH", url: BACKEND_URL +"/api/ri
 export const DELETE_RIDE_ENDPOINT = {method: "DELETE", url: BACKEND_URL +"/api/rides/"};
 
 // API keys
-export const GOOGLE_MAPS_API_KEY = "AIzaSyAzIC_UFa79-eKGiktCKPHoKDGGe6XH-G4";
+export const GOOGLE_MAPS_API_KEY = "AIzaSyBH01orWPx89gp9VRNVtZaHgKONdYlE36I";
