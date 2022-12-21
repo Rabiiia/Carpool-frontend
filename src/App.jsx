@@ -1,15 +1,6 @@
-import React, { useRef, useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Search from "./pages/Search.jsx";
-import Contact from "./pages/Contact.jsx";
-import Landing from "./pages/Landing.jsx";
-import CRUD from "./pages/CRUD";
-import ArrangeRide from "./pages/ArrangeRide.jsx";
-import MyRide from "./pages/MyRide.jsx";
-import Header from "./components/Header.jsx";
-import User from "./components/User.jsx";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { json, Route, Routes } from "react-router-dom";
+import { FRONTEND_URL } from "./settings.js";
 import {
   getToken,
   verifyToken,
@@ -17,37 +8,51 @@ import {
   removeToken,
   setToken,
 } from "./utils/apiFacade";
-import FindRide from "./pages/FindRide";
-import { FRONTEND_URL } from "./settings.js";
 
+import Header from "./components/Header.jsx";
+import Landing from "./pages/Landing.jsx";
+import Home from "./pages/Home.jsx";
+import User from "./components/User.jsx";
+import FindRide from "./pages/FindRide";
+import ArrangeRide from "./pages/ArrangeRide.jsx";
+import MyRide from "./pages/MyRide.jsx";
+import CreateSchool from "./pages/CreateSchool.jsx";
+import Schools from "./pages/Schools.jsx";
+import Contact from "./pages/Contact.jsx";
 
 export const initialState = {
-  //username: null,
-  //role: null,
-  isLoggedIn: false,
+  user: {
+    isLoggedIn: false,
+  },
 };
 
-export function updateUser(token, setUser) {
-  const payload = decodeToken(token); //console.log(payload);
-  setUser({
-    id: payload["id"],
-    username: payload["username"],
-    role: payload["role"],
-    isLoggedIn: true,
+export function jsonToSession(json, setSession) {
+  const payload = decodeToken(json.token); //console.log(payload);
+  const user = json.user; console.log(user);
+  setSession({
+    user: {
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      phone: user.phone,
+      location: user.location,
+      school: user.school,
+      role: user.role,
+      isLoggedIn: true,
+    },
+    expires: payload["exp"],
   });
 }
 
 function App(props) {
-  const [user, setUser] = useState(initialState);
+  const [session, setSession] = useState(initialState);
 
-  //denne function reruns everytime page is refreshed
-  // bemærk denne function er async, fordi verifyToken function return a promise.
-  // and async await unpacks that promise
   async function checkToken(token) {
     console.log("Checking token");
-    if ((token = await verifyToken(token))) {
-      setToken(token);
-      updateUser(token, setUser);
+    let json;
+    if ((json = await verifyToken(token))) {
+      setToken(json.token);
+      jsonToSession(json, setSession);
     } else {
       console.log("Session expired");
       alert("Your session has expired. Please log in again.");
@@ -59,10 +64,10 @@ function App(props) {
     if (getToken()) {
       (async () => {
         await checkToken(getToken());
-      })(); //< async anonymous function is being called right away ()
+      })();
       setTimeout(async () => {
         await checkToken(getToken());
-      }, 1000 * 60 * 30);
+      }, session.expires * 1000);
     }
   }, []);
 
@@ -77,30 +82,33 @@ function App(props) {
 
   return (
     <>
-      <Header user={user} setUser={setUser} />
+      <Header session={session} setSession={setSession} />
       <Routes>
         {/* Pages you can always see */}
         <Route path={FRONTEND_URL + "/user"} element={<User />} />
-        <Route path="/find-ride" element={<FindRide />} />
+        <Route path={FRONTEND_URL + "/find-ride"} element={<FindRide />} />
 
         <Route path="*" element={<h1>Page Not Found !!!!</h1>} />
        
         {!getToken() ?
           <>
             {/* Pages you can only see when you're logged OUT */}
-            <Route path={FRONTEND_URL} element={<Landing user={user} />} />
+            <Route path={FRONTEND_URL} element={<Landing />} />
 
           </> :
           <>
             {/* Pages you can only see when you're logged IN */}
-            <Route path={FRONTEND_URL} element={<Home user={user} />} />
-            <Route path="/arrange-ride" element={<ArrangeRide user={user} />} />
-            <Route path="/my-ride" element={<MyRide />} />
-            <Route path="/contact" element={<Contact address={obj} />} />
+            <Route path={FRONTEND_URL + "/"} element={<Home session={session} />} />
+            <Route path={FRONTEND_URL + "/arrange-ride"} element={<ArrangeRide user={session.user} />} />
+            <Route path={FRONTEND_URL + "/ride/:id"} element={<MyRide />} />
+            <Route path={FRONTEND_URL + "/contact"} element={<Contact address={obj} />} />
 
             {/* Pages you can only see when you're ADMIN */}
-            {user.role == "admin" &&
-              <Route path="/crud" element={<CRUD />} />
+            {session.user.role == "admin" &&
+              <>
+                <Route path={FRONTEND_URL + "/crud"} element={<CreateSchool />} />
+                <Route path="/schools" element={<Schools />} />
+              </>
             }
           </>
         }
