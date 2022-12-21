@@ -35,7 +35,7 @@ export function jsonToSession(json, setSession) {
       name: user.name,
       username: user.username,
       phone: user.phone,
-      location: user.address,
+      location: user.location,
       school: user.school,
       role: user.role,
       isLoggedIn: true,

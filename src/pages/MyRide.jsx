@@ -14,7 +14,7 @@ export default function MyRide() {
       console.log("ID: ", id);
       const ride = await getRide(id); console.log("Ride: ", ride);
       setRide(ride);
-      setWaypoints(ride.passengers.map((passenger) => ({location: `${passenger.address.address}, ${passenger.address.zipcode}`})));
+      setWaypoints(ride.passengers.map((passenger) => ({location: `${passenger.location.address}, ${passenger.location.zipcode}`})));
     })();
   }, []);
 
