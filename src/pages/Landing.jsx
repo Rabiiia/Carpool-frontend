@@ -15,9 +15,9 @@ export default function Landing() {
   const [fields, setFields] = useState({});
 
   useEffect(() => {
-    document.querySelectorAll("#userForm input").forEach((input) => { //console.log("Input: ", input);
+    document.querySelectorAll("#userForm input").forEach((input) => { console.log("Input: ", input);
       document.getElementById(input.id).onchange = (event) => { //console.log("hi");
-        const field = event.target; //console.log(field.id + ": " + field.value);
+        const field = event.target; console.log(field.id + ": " + field.value);
         const fieldName = field.id.substring("create-user-".length); //console.log(fieldName);
         setFields(prevFields => ({...prevFields, [fieldName]: field.value}));
       };
@@ -27,8 +27,6 @@ export default function Landing() {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    const userdata = {username, name, password, phone, address, zipcode, schoolId};
-
 
     console.log("Fields: ", fields);
     fetch(USER_ENDPOINT, {
